@@ -1,6 +1,7 @@
 - Cambiar la version de java en la imagen de docker
 - Compilar y probar la imagen de docker
 - Crear la base de datos no-sql e importar la data relacional en ella. Check this out: https://stackoverflow.com/questions/25240525/loading-a-tree-structure-into-neo4j-from-a-csv-file?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+Also check this out: https://groups.google.com/forum/#!topic/neo4j/S45KAaWudoQ
 - Crear los nodos de los polling place en la bd no-sql
 - Crear la data de candidatos, contiendas, y results en la base de datos no relacional
 - MACRO: diseñar servicio (nodejs) para generar data aleatoria en la bd no-sql
