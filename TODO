@@ -1,0 +1,9 @@
+- Cambiar la version de java en la imagen de docker
+- Compilar y probar la imagen de docker
+- Crear la base de datos no-sql e importar la data relacional en ella
+- Crear la data de candidatos, contiendas, y results en la base de datos no relacional
+- MACRO: diseñar servicio (nodejs) para generar data aleatoria en la bd no-sql
+- MACRO: Cada vez que se guarda un acta en la bd no-sql enviar la info a kafka
+- MACRO: Crear un servicio (nodejs) que lea la informacion desde kafka y cree Server Sent Events
+- MACRO: implementar la pagina html que utilizaran los clientes para visualizar la informacion en tiempo real
+- MACRO: evaluar como hacer una prueba de rendimiento que simule millones de usuarios conectados al servidor
