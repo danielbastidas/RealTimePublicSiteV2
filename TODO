@@ -1,5 +1,13 @@
 - Cambiar la version de java en la imagen de docker
-- Compilar y probar la imagen de docker
+- Compilar y probar la imagen de docker. Follow this instructions:
+### docker ###
+#Build image
+docker build -t docker-ems-wildfly .
+#tag image
+docker tag 98167b729b47 docker.esbu.smartmatic.net/docker-ems-wildfly:latest
+# replace 98167b729b47 with the docker build id generated. For example: Successfully built 7b6356aa21d3
+#push image
+docker push docker.esbu.smartmatic.net/docker-ems-wildfly
 - Crear la base de datos no-sql e importar la data relacional en ella. Check this out: https://stackoverflow.com/questions/25240525/loading-a-tree-structure-into-neo4j-from-a-csv-file?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
 Also check this out: https://groups.google.com/forum/#!topic/neo4j/S45KAaWudoQ
 - Crear los nodos de los polling place en la bd no-sql
