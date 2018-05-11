@@ -3,12 +3,14 @@ RUN apt-get update
 RUN apt-get install -y software-properties-common python-software-properties
 RUN add-apt-repository -y ppa:webupd8team/java
 
-#ENV DEBIAN_FRONTEND noninteractive
-#RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
+ENV DEBIAN_FRONTEND noninteractive
+RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
 #RUN dpkg-reconfigure debconf
 
-RUN echo “oracle-java8-installer shared/accepted-oracle-license-v1–1 boolean true”|debconf-set-selections
-RUN echo “oracle-java8-installer shared/present-oracle-license-v1–1 note”|debconf-set-selections
+RUN echo debconf shared/accepted-oracle-license-v1-1 select true | \
+  debconf-set-selections
+RUN echo debconf shared/accepted-oracle-license-v1-1 seen true | \
+  debconf-set-selections
 
 # Install.
 RUN \
