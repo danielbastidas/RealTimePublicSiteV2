@@ -3,7 +3,13 @@ RUN apt-get update
 RUN apt-get install -y software-properties-common python-software-properties
 RUN add-apt-repository -y ppa:webupd8team/java
 
-RUN export DEBIAN_FRONTEND=noninteractive
+#ENV DEBIAN_FRONTEND noninteractive
+#RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
+#RUN dpkg-reconfigure debconf
+
+RUN echo “oracle-java8-installer shared/accepted-oracle-license-v1–1 boolean true”|debconf-set-selections
+RUN echo “oracle-java8-installer shared/present-oracle-license-v1–1 note”|debconf-set-selections
+
 # Install.
 RUN \
   sed -i 's/# \(.*multiverse$\)/\1/g' /etc/apt/sources.list && \
@@ -11,7 +17,6 @@ RUN \
   apt-get -y upgrade && \
   apt-get install -y build-essential && \
   apt-get install -y byobu curl git htop man unzip vim wget && \
-  export DEBIAN_FRONTEND=noninteractive && \
   apt-get -y install oracle-java8-installer
 
 RUN wget -O - https://debian.neo4j.org/neotechnology.gpg.key > key.key 
