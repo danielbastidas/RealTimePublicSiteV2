@@ -19,6 +19,7 @@ RUN \
   apt-get -y upgrade && \
   apt-get install -y build-essential && \
   apt-get install -y byobu curl git htop man unzip vim wget && \
+  apt-get install -y supervisor && \
   apt-get -y install oracle-java8-installer
 
 RUN wget -O - https://debian.neo4j.org/neotechnology.gpg.key > key.key 
@@ -41,6 +42,7 @@ WORKDIR /
 ADD entrypoint.sh /usr/local/bin
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Define default command.
-CMD ["/usr/local/bin/entrypoint.sh"]
+CMD ["/usr/bin/supervisord"]
