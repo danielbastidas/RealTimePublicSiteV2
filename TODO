@@ -1,14 +1,14 @@
 - Cambiar la version de java en la imagen de docker
 - Compilar y probar la imagen de docker. Follow this instructions:
 ### docker ###
+#debuggin purpose:
+>docker commit ubuntu
+>docker run -it 7fbcb70255e bash
+
 #Build image
 docker build -t ubuntu .
 #run docker image
-docker run \
-    --publish=7474:7474 --publish=7687:7687 \
-    --volume=$HOME/neo4j/data:/data \
-    --volume=$HOME/neo4j/logs:/logs \
-    ubuntu:latest
+docker run -d --name ubuntu --publish=7474:7474 --publish=7687:7687 --volume=/home/danielbastidas/neo4j/data:/data --volume=/home/danielbastidas/neo4j/logs:/logs ubuntu:latest
 # replace 98167b729b47 with the docker build id generated. For example: Successfully built 7b6356aa21d3
 #push image
 docker push docker.esbu.smartmatic.net/docker-ems-wildfly
