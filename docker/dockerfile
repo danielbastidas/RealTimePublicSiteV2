@@ -5,7 +5,6 @@ RUN add-apt-repository -y ppa:webupd8team/java
 
 ENV DEBIAN_FRONTEND noninteractive
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
-#RUN dpkg-reconfigure debconf
 
 RUN echo debconf shared/accepted-oracle-license-v1-1 select true | \
   debconf-set-selections
@@ -26,12 +25,9 @@ RUN wget -O - https://debian.neo4j.org/neotechnology.gpg.key > key.key
 USER root
 RUN apt-key add key.key
 RUN echo 'deb http://debian.neo4j.org/repo stable/' > /etc/apt/sources.list.d/neo4j.list
-#RUN echo 'deb http://debian.neo4j.org/repo stable/' > /etc/apt/sources.list
 RUN cat /etc/apt/sources.list.d/neo4j.list 
 RUN apt-get update
 RUN apt-get install -y neo4j 
-#RUN service neo4j start
-#RUN systemctl start neo4j.service
 
 # Set environment variables.
 ENV HOME /
@@ -43,6 +39,12 @@ ADD entrypoint.sh /usr/local/bin
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY neo4j.conf /etc/neo4j/neo4j.conf
+
+RUN mkdir /var/lib/neo4j/certificates/revoked && \
+    mkdir /var/lib/neo4j/certificates/trust && \
+    chown -R neo4j:neo4j /var/lib/neo4j/certificates/revoked && \
+    chown -R neo4j:neo4j /var/lib/neo4j/certificates/trust
 
 # Define default command.
 CMD ["/usr/bin/supervisord"]
