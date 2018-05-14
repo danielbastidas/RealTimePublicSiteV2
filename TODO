@@ -14,7 +14,7 @@ docker run -d --name ubuntu --publish=7474:7474 --publish=7687:7687 --volume=/ho
 docker push docker.esbu.smartmatic.net/docker-ems-wildfly
 - Acceder a la base de datos graphdb desde afuera del contenedor[DONE]
 - Copiar el archivo de configuracion de neo4j a la instancia de docker
-- Si falla al iniciar crear las carpetas /var/lib/neo4j/certificates/revoked y /var/lib/neo4j/certificates/trust
+- Si falla setear el archivo neo4j.conf con permisologia para el usuario neo4j
 - Crear la base de datos no-sql e importar la data relacional en ella. Check this out: https://stackoverflow.com/questions/25240525/loading-a-tree-structure-into-neo4j-from-a-csv-file?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
 Also check this out: https://groups.google.com/forum/#!topic/neo4j/S45KAaWudoQ
 - Crear los nodos de los polling place en la bd no-sql
