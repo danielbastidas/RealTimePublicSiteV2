@@ -41,10 +41,13 @@ RUN chmod +x /usr/local/bin/entrypoint.sh
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY neo4j.conf /etc/neo4j/neo4j.conf
 
-RUN mkdir /var/lib/neo4j/certificates/revoked && \
-    mkdir /var/lib/neo4j/certificates/trust && \
-    chown -R neo4j:neo4j /var/lib/neo4j/certificates/revoked && \
-    chown -R neo4j:neo4j /var/lib/neo4j/certificates/trust
+#RUN mkdir -p /var/lib/neo4j/certificates/revoked && \
+#    mkdir -p /var/lib/neo4j/certificates/trust && \
+#    chown -R neo4j:neo4j /var/lib/neo4j/certificates/revoked && \
+#    chown -R neo4j:neo4j /var/lib/neo4j/certificates/trust
+
+RUN mkdir -p /var/lib/neo4j/certificates/default && \
+    chown -R neo4j:neo4j /var/lib/neo4j/certificates/default
 
 # Define default command.
 CMD ["/usr/bin/supervisord"]
