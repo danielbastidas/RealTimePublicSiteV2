@@ -24,3 +24,6 @@ Also check this out: https://groups.google.com/forum/#!topic/neo4j/S45KAaWudoQ
 - MACRO: Crear un servicio (nodejs) que lea la informacion desde kafka y cree Server Sent Events
 - MACRO: implementar la pagina html que utilizaran los clientes para visualizar la informacion en tiempo real
 - MACRO: evaluar como hacer una prueba de rendimiento que simule millones de usuarios conectados al servidor
+
+Links of interest:
+Kafka real time example: https://www.youtube.com/watch?time_continue=120&v=izTuO3IUBBY
