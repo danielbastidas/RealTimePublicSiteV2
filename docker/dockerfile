@@ -47,7 +47,7 @@ COPY neo4j.conf /etc/neo4j/neo4j.conf
 #    chown -R neo4j:neo4j /var/lib/neo4j/certificates/trust
 
 RUN mkdir -p /var/lib/neo4j/certificates/default && \
-    chown -R neo4j:neo4j /var/lib/neo4j/certificates/default
+    chown -R neo4j:neo4j /var/lib/neo4j/certificates/
 
 # Define default command.
 CMD ["/usr/bin/supervisord"]
