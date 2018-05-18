@@ -1,0 +1,29 @@
+- create index on :Label(region_code);
+
+USING PERIODIC COMMIT 100
+LOAD CSV FROM "region.csv" as line
+MERGE (n:Label {region_code:line.region_code}) ON CREATE SET n.region_name = line.region_name;
+
+USING PERIODIC COMMIT 100
+LOAD CSV FROM "region_parent.csv" as line
+MATCH (parent:Label {region_code:line.region_parent_code})
+MATCH (child:Label {region_code:line.region_child_code})
+CREATE (child)-[:PARENT]->(parent);
+
+PROBAR CON LOAD CSV CREATE
+
+### docker ###
+#debuggin purpose:
+>docker commit ubuntu
+>docker run -it 7fbcb70255e bash
+
+#Build image
+docker build -t ubuntu .
+#run docker image
+docker run -d --name ubuntu --publish=7474:7474 --publish=7687:7687 --volume=/home/danielbastidas/neo4j/data:/data --volume=/home/danielbastidas/neo4j/logs:/logs ubuntu:latest
+# replace 98167b729b47 with the docker build id generated. For example: Successfully built 7b6356aa21d3
+#push image
+docker push docker.esbu.smartmatic.net/docker-ems-wildfly
+
+Links of interest:
+Kafka real time example: https://www.youtube.com/watch?time_continue=120&v=izTuO3IUBBY
