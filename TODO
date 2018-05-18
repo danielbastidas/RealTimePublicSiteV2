@@ -1,5 +1,34 @@
 - Cambiar la version de java en la imagen de docker[DONE]
 - Compilar y probar la imagen de docker. Follow this instructions:[DONE]
+
+- Acceder a la base de datos graphdb desde afuera del contenedor[DONE]
+- Copiar el archivo de configuracion de neo4j a la instancia de docker[DONE]
+- Si falla setear el archivo neo4j.conf con permisologia para el usuario neo4j[DONE]
+
+- create index on :Label(region_code);
+
+USING PERIODIC COMMIT 100
+LOAD CSV FROM "region.csv" as line
+MERGE (n:Label {region_code:line.region_code}) ON CREATE SET n.region_name = line.region_name;
+
+USING PERIODIC COMMIT 100
+LOAD CSV FROM "region_parent.csv" as line
+MATCH (parent:Label {region_code:line.region_parent_code})
+MATCH (child:Label {region_code:line.region_child_code})
+CREATE (child)-[:PARENT]->(parent);
+
+PROBAR CON LOAD CSV CREATE
+
+- Crear la base de datos no-sql e importar la data relacional en ella. Check this out: https://stackoverflow.com/questions/25240525/loading-a-tree-structure-into-neo4j-from-a-csv-file?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+Also check this out: https://groups.google.com/forum/#!topic/neo4j/S45KAaWudoQ
+- Crear los nodos de los polling place en la bd no-sql
+- Crear la data de candidatos, contiendas, y results en la base de datos no relacional
+- MACRO: diseñar servicio (nodejs) para generar data aleatoria en la bd no-sql
+- MACRO: Cada vez que se guarda un acta en la bd no-sql enviar la info a kafka
+- MACRO: Crear un servicio (nodejs) que lea la informacion desde kafka y cree Server Sent Events
+- MACRO: implementar la pagina html que utilizaran los clientes para visualizar la informacion en tiempo real
+- MACRO: evaluar como hacer una prueba de rendimiento que simule millones de usuarios conectados al servidor
+
 ### docker ###
 #debuggin purpose:
 >docker commit ubuntu
@@ -12,18 +41,6 @@ docker run -d --name ubuntu --publish=7474:7474 --publish=7687:7687 --volume=/ho
 # replace 98167b729b47 with the docker build id generated. For example: Successfully built 7b6356aa21d3
 #push image
 docker push docker.esbu.smartmatic.net/docker-ems-wildfly
-- Acceder a la base de datos graphdb desde afuera del contenedor[DONE]
-- Copiar el archivo de configuracion de neo4j a la instancia de docker[DONE]
-- Si falla setear el archivo neo4j.conf con permisologia para el usuario neo4j[DONE]
-- Crear la base de datos no-sql e importar la data relacional en ella. Check this out: https://stackoverflow.com/questions/25240525/loading-a-tree-structure-into-neo4j-from-a-csv-file?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
-Also check this out: https://groups.google.com/forum/#!topic/neo4j/S45KAaWudoQ
-- Crear los nodos de los polling place en la bd no-sql
-- Crear la data de candidatos, contiendas, y results en la base de datos no relacional
-- MACRO: diseñar servicio (nodejs) para generar data aleatoria en la bd no-sql
-- MACRO: Cada vez que se guarda un acta en la bd no-sql enviar la info a kafka
-- MACRO: Crear un servicio (nodejs) que lea la informacion desde kafka y cree Server Sent Events
-- MACRO: implementar la pagina html que utilizaran los clientes para visualizar la informacion en tiempo real
-- MACRO: evaluar como hacer una prueba de rendimiento que simule millones de usuarios conectados al servidor
 
 Links of interest:
 Kafka real time example: https://www.youtube.com/watch?time_continue=120&v=izTuO3IUBBY
