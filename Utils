@@ -1,8 +1,13 @@
 - create index on :Label(region_code);
-
+#Merge
 USING PERIODIC COMMIT 100
 LOAD CSV FROM "region.csv" as line
 MERGE (n:Label {region_code:line.region_code}) ON CREATE SET n.region_name = line.region_name;
+
+#Create
+USING PERIODIC COMMIT 100
+LOAD CSV WITH HEADERS FROM "https://expirebox.com/files/714a2ccf82e622d374588d44cec6f862.csv" as line
+CREATE (n:Label {region_code:line.region_code, region_name:line.region_name});
 
 USING PERIODIC COMMIT 100
 LOAD CSV FROM "region_parent.csv" as line
