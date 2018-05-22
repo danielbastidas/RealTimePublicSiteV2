@@ -26,4 +26,5 @@ docker run -d --name ubuntu --publish=7474:7474 --publish=7687:7687 --volume=/ho
 docker push docker.esbu.smartmatic.net/docker-ems-wildfly
 
 Links of interest:
-Kafka real time example: https://www.youtube.com/watch?time_continue=120&v=izTuO3IUBBY
+- Kafka real time example: https://www.youtube.com/watch?time_continue=120&v=izTuO3IUBBY
+- Temporal web server: https://expirebox.com/
