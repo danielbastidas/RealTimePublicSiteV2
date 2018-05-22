@@ -1,22 +1,26 @@
+### NEO4j ###
 - create index on :Label(region_code);
-#Merge
+# create regions
 USING PERIODIC COMMIT 100
-LOAD CSV FROM "region.csv" as line
-MERGE (n:Label {region_code:line.region_code}) ON CREATE SET n.region_name = line.region_name;
+LOAD CSV WITH HEADERS FROM "https://expirebox.com/files/fe815ed9a50a7376fbdac82efe345117.csv" as line
+CREATE (n:region {region_code:line.REGION_CODE, region_name:line.REGION_NAME});
 
-#Create
+# create region relationships
 USING PERIODIC COMMIT 100
-LOAD CSV WITH HEADERS FROM "https://expirebox.com/files/714a2ccf82e622d374588d44cec6f862.csv" as line
-CREATE (n:Label {region_code:line.region_code, region_name:line.region_name});
-
-USING PERIODIC COMMIT 100
-LOAD CSV FROM "region_parent.csv" as line
-MATCH (parent:Label {region_code:line.region_parent_code})
-MATCH (child:Label {region_code:line.region_child_code})
+LOAD CSV WITH HEADERS FROM "https://expirebox.com/files/ca42929df3fb9694840a5a09155bee84.csv" as line
+MATCH (parent:region {region_code:line.REGION_PARENT_CODE})
+MATCH (child:region {region_code:line.REGION_CHILD_CODE})
 CREATE (child)-[:PARENT]->(parent);
 
-PROBAR CON LOAD CSV CREATE
+# return regions
+MATCH (n:region) RETURN n, properties(n), ID(n) LIMIT 25
 
+# return regions with relationships
+MATCH p=()-[r:PARENT]->() RETURN p;
+
+# delete regions
+MATCH (n:region)
+DELETE n;
 ### docker ###
 #debuggin purpose:
 >docker commit ubuntu
