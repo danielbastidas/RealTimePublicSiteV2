@@ -12,6 +12,18 @@ MATCH (parent:region {region_code:line.REGION_PARENT_CODE})
 MATCH (child:region {region_code:line.REGION_CHILD_CODE})
 CREATE (child)-[:PARENT]->(parent);
 
+# create polling places. delimiter example
+USING PERIODIC COMMIT 100
+LOAD CSV WITH HEADERS FROM "https://expirebox.com/files/590dbddd8d6b1d30664e2513fa2bd156.csv" as line FIELDTERMINATOR '|'
+CREATE (n:polling_place {polling_place_code:line.POLLING_PLACE_CODE, polling_place_name:line.POLLING_PLACE_NAME, voter_number:line.VOTER_NUMBER, region_code:line.REGION_CODE});
+
+# create relationships to polling place
+USING PERIODIC COMMIT 100
+LOAD CSV WITH HEADERS FROM "https://expirebox.com/files/590dbddd8d6b1d30664e2513fa2bd156.csv" as line FIELDTERMINATOR '|'
+MATCH (parent:region {region_code:line.REGION_CODE})
+MATCH (child:polling_place {region_code:line.POLLING_PLACE_CODE})
+CREATE (child)-[:PARENT]->(parent);
+
 # return regions
 MATCH (n:region) RETURN n, properties(n), ID(n) LIMIT 25
 
@@ -21,6 +33,14 @@ MATCH p=()-[r:PARENT]->() RETURN p;
 # delete regions
 MATCH (n:region)
 DELETE n;
+
+# load from csv and print lines
+LOAD CSV WITH HEADERS FROM "https://expirebox.com/files/aec44478d36391ecf419d2554775c355.csv" AS line WITH line
+RETURN line;
+
+# where example
+match(n:polling_place) where n.polling_place_code is null delete n;
+
 ### docker ###
 #debuggin purpose:
 >docker commit ubuntu
